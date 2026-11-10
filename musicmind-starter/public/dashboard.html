@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MusicMind — Raw Data Check</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background: #121212; color: #fff; padding: 24px; }
+    pre { background: #1e1e1e; padding: 16px; border-radius: 8px; overflow-x: auto; max-height: 70vh; }
+    h2 { color: #1DB954; }
+  </style>
+</head>
+<body>
+  <h1>✅ Logged in — raw profile data</h1>
+  <p>This page is just for verifying the auth + data layer works. Real dashboard UI comes next.</p>
+  <pre id="output">Loading...</pre>
+
+  <script>
+    fetch('/api/full-profile')
+      .then((res) => {
+        if (!res.ok) throw new Error('Not authorized or request failed — try logging in again.');
+        return res.json();
+      })
+      .then((data) => {
+        document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+      })
+      .catch((err) => {
+        document.getElementById('output').textContent = 'Error: ' + err.message;
+      });
+  </script>
+</body>
+</html>
